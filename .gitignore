@@ -8,5 +8,7 @@
 *.rar
 *.class
 *.log
-
 pom.xml
+
+# Build output folder
+target/*

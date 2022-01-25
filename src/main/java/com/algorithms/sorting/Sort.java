@@ -178,10 +178,42 @@ public class Sort {
         return i;
     }
 
-    public static void printArray(int[] testArr) {
-        for(int i : testArr){
+    public static void printArray(int[] intArr) {
+        for(int i : intArr){
             System.out.print(i);
         }
         System.out.println();
+    }
+
+    public static void countingSort(int[] intArr, int low, int high){
+        if(low >= high) {
+            System.out.println("The low value cannot be greater than or equal to high value.");
+            return;
+        } else if (low < 0 || high < 0){
+            System.out.println("The value for 'low' and 'high' args, must be positive values.");
+            return;
+        }
+
+        if(intArr.length > 0){
+            int range = (high - low) + 1;
+            int[] countArr = new int[range];
+
+            // Populate the count array with a count of each value in the range from low to high
+            for(int i : intArr) {
+                // Support relative positioning in order to support ranges that don't start at 0
+                int pos = i - low;
+                countArr[pos]++;
+            }
+
+            int i = 0;
+            int curVal = low;
+            for(int count : countArr){
+                while(count > 0){
+                    intArr[i++] = curVal;
+                    --count;
+                }
+                curVal++;
+            }
+        }
     }
 }

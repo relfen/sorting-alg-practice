@@ -185,28 +185,28 @@ public class Sort {
         System.out.println();
     }
 
-    public static void countingSort(int[] intArr, int low, int high){
-        if(low >= high) {
-            System.out.println("The low value cannot be greater than or equal to high value.");
+    public static void countingSort(int[] intArr, int min, int max){
+        if(min >= max) {
+            System.out.println("The min value cannot be greater than or equal to max value.");
             return;
-        } else if (low < 0 || high < 0){
-            System.out.println("The value for 'low' and 'high' args, must be positive values.");
+        } else if (min < 0 || max < 0){
+            System.out.println("The value for 'min' and 'max' args, must be positive values.");
             return;
         }
 
         if(intArr.length > 0){
-            int range = (high - low) + 1;
+            int range = (max - min) + 1;
             int[] countArr = new int[range];
 
-            // Populate the count array with a count of each value in the range from low to high
+            // Populate the count array with a count of each value in the range from min to max
             for(int i : intArr) {
                 // Support relative positioning in order to support ranges that don't start at 0
-                int pos = i - low;
+                int pos = i - min;
                 countArr[pos]++;
             }
 
             int i = 0;
-            int curVal = low;
+            int curVal = min;
             for(int count : countArr){
                 while(count > 0){
                     intArr[i++] = curVal;

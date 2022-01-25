@@ -84,7 +84,7 @@ public class SortTest {
     public void testCountingSortInvalidLow()
     {
         Sort.countingSort(testArr, -1, 9);
-        String out = "The value for 'low' and 'high' args, must be positive values.\n";
+        String out = "The value for 'min' and 'max' args, must be positive values.\n";
         assertEquals(out, this.testOut.toString());
     }
 
@@ -92,7 +92,7 @@ public class SortTest {
     public void testCountingSortInvalidRange()
     {
         Sort.countingSort(testArr, 5, 4);
-        String out = "The low value cannot be greater than or equal to high value.\n";
+        String out = "The min value cannot be greater than or equal to max value.\n";
         assertEquals(out, this.testOut.toString());
     }
 }

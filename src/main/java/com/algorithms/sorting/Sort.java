@@ -189,8 +189,8 @@ public class Sort {
         if(min >= max) {
             System.out.println("The min value cannot be greater than or equal to max value.");
             return;
-        } else if (min < 0 || max < 0){
-            System.out.println("The value for 'min' and 'max' args, must be positive values.");
+        } else if (min < 0){
+            System.out.println("The value for 'min' arg must be a positive value.");
             return;
         }
 
@@ -215,5 +215,46 @@ public class Sort {
                 curVal++;
             }
         }
+    }
+
+    public static void radixSort(int[] intArr, int radix, int width){
+        if(intArr.length > 1){
+            for(int i = 0; i < width; i++){
+                radixPositionSort(intArr, i, radix);
+            }
+        }
+    }
+
+    private static void radixPositionSort(int[] intArr, int pos, int radix) {
+        int numItems = intArr.length;
+        int[] countArray = new int[radix];
+
+        // Track number of occurrence of each digit
+        for(int value: intArr){
+            countArray[getDigit(pos, value, radix)]++;
+        }
+
+        // Add up adjacent counts to give a total for each digit position, summed by its siblings
+        // i.e. position 2 = position 1 + position 0; position 3 = position 2 + position 1 + position 0;
+        for(int i = 1; i < countArray.length; i++){
+            countArray[i] += countArray[i-1];
+        }
+
+        // Going from right to left, copy the full values from our source array, into a temp array
+        // These will go in order based on position and will be stable.
+        int[] temp = new int[numItems];
+        for(int j = numItems - 1; j >= 0; j--){
+            int digit = getDigit(pos, intArr[j], radix);
+            int count = --countArray[digit];
+            temp[count] = intArr[j];
+        }
+
+        // Move all the temp positions back to the source array
+        System.arraycopy(temp, 0, intArr, 0, intArr.length);
+
+    }
+
+    private static int getDigit(int pos, int value, int radix) {
+        return (value / (int) Math.pow(radix, pos)) % radix;
     }
 }

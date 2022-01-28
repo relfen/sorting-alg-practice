@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -94,5 +95,14 @@ public class SortTest {
         Sort.countingSort(testArr, 5, 4);
         String out = "The min value cannot be greater than or equal to max value.\n";
         assertEquals(out, this.testOut.toString());
+    }
+
+    @Test
+    public void testRadixSort()
+    {
+        int[] intArr = new int[] {123, 778, 243, 555, 100, 277, 701, 444};
+        int[] sortedArr = new int[] {100, 123, 243, 277, 444, 555, 701, 778};
+        Sort.radixSort(intArr, 10, 3);
+        assertArrayEquals(sortedArr, intArr);
     }
 }

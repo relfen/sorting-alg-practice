@@ -85,13 +85,13 @@ public class Sort {
         }
     }
 
-    public static void mergeSort(int[] intArr){
+    public static void mergeSort(int[] intArr, boolean ascending){
         if(intArr.length > 1){
-            mergeSort(intArr, 0, intArr.length);
+            mergeSort(intArr, 0, intArr.length, ascending);
         }
     }
 
-    private static void mergeSort(int[] intArr, int start, int end){
+    private static void mergeSort(int[] intArr, int start, int end, boolean ascending){
         if (end - start < 2){
             return;
         }
@@ -100,17 +100,19 @@ public class Sort {
         int middle = (start + end) / 2;
 
         // Left side
-        mergeSort(intArr, start, middle);
+        mergeSort(intArr, start, middle, ascending);
 
         // Right side
-        mergeSort(intArr, middle, end);
+        mergeSort(intArr, middle, end, ascending);
 
         // Merge each of the sorted arrays
-        mergeSortedArray(intArr, start, middle, end);
+        mergeSortedArray(intArr, start, middle, end, ascending);
     }
 
-    private static void mergeSortedArray(int[] intArr, int start, int middle, int end){
-        if(intArr[middle - 1] <= intArr[middle]){
+    private static void mergeSortedArray(int[] intArr, int start, int middle, int end, boolean ascending){
+        if(ascending && intArr[middle - 1] <= intArr[middle]){
+            return;
+        } else if (!ascending && intArr[middle - 1] >= intArr[middle]) {
             return;
         }
 
@@ -120,7 +122,7 @@ public class Sort {
         int tempArrIdx = 0;
 
         while(i < middle && j < end){
-            if(intArr[i] <= intArr[j]){
+            if((ascending && intArr[i] <= intArr[j]) || !ascending && intArr[i] >= intArr[j]){
                 tempArr[tempArrIdx] = intArr[i];
                 i++;
             } else {
@@ -131,7 +133,7 @@ public class Sort {
         }
         int copyIdx = start + tempArrIdx;
         while(i < middle) {
-            intArr[copyIdx++] =  intArr[i++];
+            intArr[copyIdx++] = intArr[i++];
         }
 
         int l = 0;

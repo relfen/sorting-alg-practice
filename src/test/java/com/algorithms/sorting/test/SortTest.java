@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SortTest {
     int[] testArr;
     int[] sortedArr = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int[] sortedArrDesc = new int[] {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
     private final ByteArrayOutputStream testOut = new ByteArrayOutputStream();
     private static final PrintStream stdOut = System.out;
 
@@ -61,10 +62,17 @@ public class SortTest {
     }
 
     @Test
-    public void testMergeSort()
+    public void testMergeSortAsc()
     {
-        Sort.mergeSort(testArr);
+        Sort.mergeSort(testArr, true);
         assertArrayEquals(sortedArr, testArr);
+    }
+
+    @Test
+    public void testMergeSortDesc()
+    {
+        Sort.mergeSort(testArr, false);
+        assertArrayEquals(sortedArrDesc, testArr);
     }
 
     @Test

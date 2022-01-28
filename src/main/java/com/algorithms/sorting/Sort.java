@@ -46,20 +46,28 @@ public class Sort {
 
     public static void insertionSort(int[] intArr){
         if (intArr.length > 1) {
-            for(int i = 1; i < intArr.length; i++){
-                int elementVal = intArr[i];
-                int j;
+            insertionSort(intArr, intArr.length);
+        }
+    }
 
-                for(j = i; j > 0; j--){
-                    if(elementVal < intArr[j-1]){
-                        intArr[j] = intArr[j-1];
-                    } else {
-                        break;
-                    }
-                }
-                intArr[j] = elementVal;
+    private static void insertionSort(int[] intArr, int numItems){
+        if(numItems < 2){
+            return;
+        }
+
+        insertionSort(intArr, numItems - 1);
+
+        int idx = numItems - 1;
+        int j;
+        int elementVal = intArr[idx];
+        for(j = idx; j > 0; j--){
+            if(elementVal < intArr[j-1]){
+                intArr[j] = intArr[j-1];
+            } else {
+                break;
             }
         }
+        intArr[j] = elementVal;
     }
 
     public static void shellSort(int[] intArr){

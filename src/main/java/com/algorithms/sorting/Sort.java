@@ -227,6 +227,42 @@ public class Sort {
         }
     }
 
+    public static void radixSort(String[] strings, int radix, int width){
+        if(strings.length > 1){
+            for(int i = width - 1; i >= 0; i--){
+                radixPositionSort(strings, i, radix);
+            }
+        }
+    }
+
+    private static void radixPositionSort(String[] strings, int pos, int radix){
+        int numItems = strings.length;
+        int[] countArray = new int[radix];
+
+        // Track number of occurrence of each digit
+        for(String s: strings){
+            countArray[getIndex(pos, s)]++;
+        }
+
+        // Add up adjacent counts to give a total for each digit position, summed by its siblings
+        // i.e. position 2 = position 1 + position 0; position 3 = position 2 + position 1 + position 0;
+        for(int i = 1; i < countArray.length; i++){
+            countArray[i] += countArray[i-1];
+        }
+
+        // Going from right to left, copy the full values from our source array, into a temp array
+        // These will go in order based on position and will be stable.
+        String[] temp = new String[numItems];
+        for(int j = numItems - 1; j >= 0; j--){
+            int digit = getIndex(pos, strings[j]);
+            int count = --countArray[digit];
+            temp[count] = strings[j];
+        }
+
+        // Move all the temp positions back to the source array
+        System.arraycopy(temp, 0, strings, 0, strings.length);
+    }
+
     public static void radixSort(int[] intArr, int radix, int width){
         if(intArr.length > 1){
             for(int i = 0; i < width; i++){
@@ -261,10 +297,15 @@ public class Sort {
 
         // Move all the temp positions back to the source array
         System.arraycopy(temp, 0, intArr, 0, intArr.length);
-
     }
 
     private static int getDigit(int pos, int value, int radix) {
         return (value / (int) Math.pow(radix, pos)) % radix;
+    }
+
+    private static int getIndex(int pos, String s) {
+        // ASCII value for 'a' is 97. Substract this value to get the initial index position
+        int offset = 97;
+        return s.charAt(pos) - offset;
     }
 }

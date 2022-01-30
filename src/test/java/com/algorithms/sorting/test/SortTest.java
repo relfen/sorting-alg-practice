@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -93,7 +92,7 @@ public class SortTest {
     public void testCountingSortInvalidLow()
     {
         Sort.countingSort(testArr, -1, 9);
-        String out = "The value for 'min' and 'max' args, must be positive values.\n";
+        String out = "The value for 'min' arg must be a positive value.\n";
         assertEquals(out, this.testOut.toString());
     }
 
@@ -106,11 +105,20 @@ public class SortTest {
     }
 
     @Test
-    public void testRadixSort()
+    public void testRadixIntSort()
     {
         int[] intArr = new int[] {123, 778, 243, 555, 100, 277, 701, 444};
         int[] sortedArr = new int[] {100, 123, 243, 277, 444, 555, 701, 778};
         Sort.radixSort(intArr, 10, 3);
         assertArrayEquals(sortedArr, intArr);
+    }
+
+    @Test
+    public void testRadixStringSort()
+    {
+        String[] strings = new String[] {"chat", "food", "aabb", "zzaz", "fool", "back", "kloc"};
+        String[] sortedArr = new String[] {"aabb", "back", "chat", "food", "fool", "kloc", "zzaz"};
+        Sort.radixSort(strings, 26, 4);
+        assertArrayEquals(sortedArr, strings);
     }
 }
